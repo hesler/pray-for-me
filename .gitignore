@@ -43,3 +43,6 @@ bower.json
 
 # Database configuration
 /config/database.yml
+
+# Mac
+.DS_Store
