@@ -1,5 +1,13 @@
 %header.main-header
+  =link_to admin_root_url, class: :logo do
+    %span.logo-mini
+      A
+    %span.logo-lg
+      Admin Panel
   %nav.navbar.navbar-static-top
+    = link_to '#', class: 'sidebar-toggle', data: { toggle: 'offcanvas' }, role: :button do
+      %span.sr-only
+        Toggle navigation
     .container-fluid
       .navbar-header
         = link_to 'PrayForMe', admin_root_url, class: 'navbar-brand'

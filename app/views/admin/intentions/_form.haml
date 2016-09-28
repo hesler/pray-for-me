@@ -1,0 +1,16 @@
+.box-body
+  - if flash[:error]
+    .callout.callout-danger
+      %h4 Errors
+      %ul
+        - flash[:error].full_messages.each do |msg|
+          %li #{msg}
+  .form-group{ class: "#{ 'has-error' if in_flash_error(:country) }" }
+    =f.label :country
+    =f.text_field :country, class: 'form-control', placeholder: 'Enter country...'
+  .form-group{ class: "#{ 'has-error' if in_flash_error(:content) }" }
+    =f.label :content
+    =f.text_area :content, class: 'form-control', placeholder: 'Enter content...'
+.box-footer
+  .pull-right
+    =f.submit 'Submit', class: 'btn btn-primary'
