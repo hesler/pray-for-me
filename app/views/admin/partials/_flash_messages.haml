@@ -1,0 +1,17 @@
+- if flash[:success]
+  .box-body
+    .alert.alert-success.alert-dismissible
+      %button.close{ data: { dismiss: :alert }, aria: { hidden: true } }
+        x
+      %span
+        %i.icon.fa.fa-check
+        = flash[:success]
+
+- if flash[:warning]
+  .box-body
+    .alert.alert-warning.alert-dismissible
+      %button.close{ data: { dismiss: :alert }, aria: { hidden: true } }
+        x
+      %span
+        %i.icon.fa.fa-warning
+        = flash[:warning]

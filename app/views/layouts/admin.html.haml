@@ -8,7 +8,10 @@
     = stylesheet_link_tag    'admin', media: 'all'
     = javascript_include_tag 'admin'
     = csrf_meta_tags
-  %body.layout-top-nav.skin-red
+  %body.sidebar-mini.skin-red
     .wrapper
       = render 'layouts/admin/header'
-    = yield
+      = render 'layouts/admin/sidebar'
+      .content-wrapper
+        = render partial: 'admin/partials/flash_messages'
+        = yield

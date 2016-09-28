@@ -1,0 +1,27 @@
+%section.content-header
+  .pull-right.buttons
+    = link_to new_admin_intention_path, :class => 'btn btn-default btn-sm' do
+      +
+  %h1
+    Intentions
+    %small index
+
+%section.content
+  - if intentions.any?
+    - intentions.each do |intention|
+      .col-md-3.col-sm-6.col-xs-12
+        .info-box
+          %span.info-box-icon.bg-yellow
+            %i.ion.ion-ios-chatbubble-outline
+          .info-box-content
+            %span.info-box-text
+              %b
+                = intention.country
+            %span
+              = truncate(intention.content, length: 40)
+  - else
+    .box.box-solid.box-info
+      .box-header
+        %h3.box-title Empty intention list
+      .box-body
+        There is no intentions yet.
