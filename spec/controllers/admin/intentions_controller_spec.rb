@@ -57,4 +57,58 @@ RSpec.describe Admin::IntentionsController do
       end
     end
   end
+
+  describe 'PUT update' do
+    let(:intention) { create(:intention) }
+    let(:content) { 'I need prayer' }
+    let(:country) { 'England' }
+
+    context 'with wrong id' do
+      let(:params) { { id: 0, intention: { content: content, country: country } } }
+
+      before do
+        put :update, params: params, 'Content-Type' => 'application/x-www-form-urlencoded'
+      end
+
+      it 'should return 302' do
+        expect(response.status).to eq 302
+        expect(flash[:warning]).to eq 'Intention does not exist'
+      end
+    end
+
+    context 'with correct params' do
+      let(:params) { { id: intention.id, intention: { content: content, country: country } } }
+
+      before do
+        put :update, params: params, 'Content-Type' => 'application/x-www-form-urlencoded'
+      end
+
+      it 'should return 302' do
+        expect(response.status).to eq 302
+        expect(flash[:success]).to eq 'Intention updated'
+      end
+
+      it 'should updated an intention' do
+        expect(Intention.count).to eq 1
+        expect(Intention.first.content).to eq content
+        expect(Intention.first.country).to eq country
+      end
+    end
+
+    context 'with errors' do
+      let(:params) { { id: intention.id, intention: { content: content, country: '' } } }
+
+      before do
+        put :update, params: params, 'Content-Type' => 'application/x-www-form-urlencoded'
+      end
+
+      it 'should return 200' do
+        expect(response.status).to eq 200
+      end
+
+      it 'should have errors in flash' do
+        expect(flash[:error].full_messages.first).to eq "Country can't be blank"
+      end
+    end
+  end
 end

@@ -1,0 +1,14 @@
+%section.content-header
+  .pull-right.buttons
+    = link_to admin_intentions_path, :class => 'btn btn-default btn-sm' do
+      Back
+  %h1
+    Edit intention
+
+%section.content
+  .col-md-6
+    .box.box-info
+      .box-header.with-border
+        %h3.box-title Intention Form
+      = form_for intention, url: admin_intention_path(intention.id), method: :put do |f|
+        = render partial: 'form', locals: { f: f, intention: intention }

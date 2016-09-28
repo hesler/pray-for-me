@@ -4,9 +4,9 @@ Rails.application.routes.draw do
 
   namespace :admin do
     root 'welcome#index'
-    resources :intentions, only: [:index, :new, :create]
+    resources :intentions, only: [:index, :new, :create, :edit, :update]
   end
 
   # You can have the root of your site routed with "root"
-  root 'welcome#index'
+  root 'admin/welcome#index'
 end

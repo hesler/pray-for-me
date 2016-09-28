@@ -11,8 +11,9 @@
     - intentions.each do |intention|
       .col-md-3.col-sm-6.col-xs-12
         .info-box
-          %span.info-box-icon.bg-yellow
-            %i.ion.ion-ios-chatbubble-outline
+          = link_to edit_admin_intention_path(intention.id) do
+            %span.info-box-icon.bg-yellow
+              %i.ion.ion-ios-chatbubble-outline
           .info-box-content
             %span.info-box-text
               %b
