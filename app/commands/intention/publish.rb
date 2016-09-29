@@ -11,6 +11,6 @@ class Intention::Publish
   end
 
   def call
-    @intention.update!(published: true)
+    @intention.update!(status: Intention.statuses[:published])
   end
 end

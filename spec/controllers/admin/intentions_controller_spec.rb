@@ -118,7 +118,7 @@ RSpec.describe Admin::IntentionsController do
       end
 
       it 'should updated an intention' do
-        expect(Intention.first.published).to eq true
+        expect(Intention.first.published?).to eq true
       end
     end
 

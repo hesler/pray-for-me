@@ -18,7 +18,7 @@ class Intention::Create
   validates :lng, numericality: { greater_than: -180, less_than: 180 },  allow_blank: true
 
   def call
-    @intention = Intention.new(attributes.merge(published: false))
+    @intention = Intention.new(attributes.merge(status: Intention.statuses[:pending]))
     validate!
     @intention.save!
   rescue ActiveModel::ValidationError
