@@ -39,6 +39,16 @@ class Admin::IntentionsController < AdminController
     render 'admin/intentions/edit', locals: { intention: intention_update.intention }, status: 422
   end
 
+  def publish
+    intention = Intention.find(params[:id])
+    Intention::Publish.new(intention).call
+    redirect_to admin_intentions_path, flash: { success: 'Intention published' }
+  rescue ActiveRecord::RecordNotFound
+    redirect_to admin_intentions_path, flash: { warning: 'Intention does not exist' }
+  rescue ActiveRecord::RecordInvalid
+    redirect_to admin_intentions_path, flash: { warning: 'Intention is invalid' }
+  end
+
   private
 
   def intention_params

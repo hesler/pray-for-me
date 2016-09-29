@@ -1,6 +1,11 @@
 %section.content-header
   .pull-right.buttons
-    = link_to admin_intentions_path, :class => 'btn btn-default btn-sm' do
+    - if intention.published?
+
+    - else
+      = link_to publish_admin_intention_path, class: 'btn btn-default btn-sm', data: { confirm: 'Are you sure?' }, method: :post do
+        Publish
+    = link_to admin_intentions_path, class: 'btn btn-default btn-sm' do
       Back
   %h1
     Edit intention

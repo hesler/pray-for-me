@@ -18,6 +18,9 @@
             %span.info-box-text
               %b
                 = intention.country
+              - if intention.published?
+                .pull-right
+                  %i.fa.fa-check-circle.text-green
             %span
               = truncate(intention.content, length: 40)
   - else
