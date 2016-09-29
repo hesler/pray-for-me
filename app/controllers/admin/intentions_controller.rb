@@ -16,7 +16,7 @@ class Admin::IntentionsController < AdminController
     redirect_to admin_intentions_path, flash: { success: 'Intention added' }
   rescue CommonErrors::CommandValidationFailed
     flash[:error] = intention_create.errors
-    render 'admin/intentions/new', locals: { intention: intention_create.intention }
+    render 'admin/intentions/new', locals: { intention: intention_create.intention }, status: 422
   end
 
   def edit
@@ -36,7 +36,7 @@ class Admin::IntentionsController < AdminController
     redirect_to admin_intentions_path, flash: { warning: 'Intention does not exist' }
   rescue CommonErrors::CommandValidationFailed
     flash[:error] = intention_update.errors
-    render 'admin/intentions/edit', locals: { intention: intention_update.intention }
+    render 'admin/intentions/edit', locals: { intention: intention_update.intention }, status: 422
   end
 
   private

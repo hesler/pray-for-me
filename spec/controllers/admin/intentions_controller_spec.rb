@@ -5,12 +5,11 @@ RSpec.describe Admin::IntentionsController do
     context 'with two intentions' do
       let!(:intention) { FactoryGirl.create(:intention) }
       let!(:intention2) { FactoryGirl.create(:intention) }
-      before do
-        get :index
-      end
+
+      subject! { get :index }
 
       it 'should return 200' do
-        expect(response.status).to eq 200
+        expect(subject.status).to eq 200
       end
     end
   end
@@ -22,12 +21,11 @@ RSpec.describe Admin::IntentionsController do
       let(:city) { 'London' }
       let(:params) { { intention: { content: content, country: country, city: city, lat: 51.531133, lng: -0.226091 } } }
 
-      before do
-        post :create, params: params, 'Content-Type' => 'application/x-www-form-urlencoded'
-      end
+      subject! { post :create, params: params, 'Content-Type' => 'application/x-www-form-urlencoded' }
 
       it 'should return 302' do
-        expect(response.status).to eq 302
+        expect(subject.status).to eq 302
+        expect(subject).to redirect_to admin_intentions_path
         expect(flash[:success]).to eq 'Intention added'
       end
 
@@ -44,12 +42,10 @@ RSpec.describe Admin::IntentionsController do
       let(:city) { 'London' }
       let(:params) { { intention: { content: content, country: '', city: city, lat: 51.531133, lng: -0.226091 } } }
 
-      before do
-        post :create, params: params, 'Content-Type' => 'application/x-www-form-urlencoded'
-      end
+      subject! { post :create, params: params, 'Content-Type' => 'application/x-www-form-urlencoded' }
 
-      it 'should return 200' do
-        expect(response.status).to eq 200
+      it 'should return 422' do
+        expect(subject.status).to eq 422
       end
 
       it 'should have errors in flash' do
@@ -66,12 +62,10 @@ RSpec.describe Admin::IntentionsController do
     context 'with wrong id' do
       let(:params) { { id: 0, intention: { content: content, country: country } } }
 
-      before do
-        put :update, params: params, 'Content-Type' => 'application/x-www-form-urlencoded'
-      end
+      subject! { put :update, params: params, 'Content-Type' => 'application/x-www-form-urlencoded' }
 
       it 'should return 302' do
-        expect(response.status).to eq 302
+        expect(subject.status).to eq 302
         expect(flash[:warning]).to eq 'Intention does not exist'
       end
     end
@@ -79,12 +73,11 @@ RSpec.describe Admin::IntentionsController do
     context 'with correct params' do
       let(:params) { { id: intention.id, intention: { content: content, country: country } } }
 
-      before do
-        put :update, params: params, 'Content-Type' => 'application/x-www-form-urlencoded'
-      end
+      subject! { put :update, params: params, 'Content-Type' => 'application/x-www-form-urlencoded' }
 
       it 'should return 302' do
-        expect(response.status).to eq 302
+        expect(subject.status).to eq 302
+        expect(subject).to redirect_to admin_intentions_path
         expect(flash[:success]).to eq 'Intention updated'
       end
 
@@ -98,12 +91,10 @@ RSpec.describe Admin::IntentionsController do
     context 'with errors' do
       let(:params) { { id: intention.id, intention: { content: content, country: '' } } }
 
-      before do
-        put :update, params: params, 'Content-Type' => 'application/x-www-form-urlencoded'
-      end
+      subject! { put :update, params: params, 'Content-Type' => 'application/x-www-form-urlencoded' }
 
-      it 'should return 200' do
-        expect(response.status).to eq 200
+      it 'should return 422' do
+        expect(subject.status).to eq 422
       end
 
       it 'should have errors in flash' do
