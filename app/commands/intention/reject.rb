@@ -1,6 +1,6 @@
 require 'active_model/validations'
 
-class Intention::Publish
+class Intention::Reject
   include ::Virtus.model
   include ::ActiveModel::Validations
 
@@ -11,6 +11,6 @@ class Intention::Publish
   end
 
   def call
-    @intention.update!(status: Intention.statuses[:published])
+    @intention.update!(status: Intention.statuses[:rejected])
   end
 end

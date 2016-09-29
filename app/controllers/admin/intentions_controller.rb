@@ -49,6 +49,16 @@ class Admin::IntentionsController < AdminController
     redirect_to admin_intentions_path, flash: { warning: 'Intention is invalid' }
   end
 
+  def reject
+    intention = Intention.find(params[:id])
+    Intention::Reject.new(intention).call
+    redirect_to admin_intentions_path, flash: { success: 'Intention rejected' }
+  rescue ActiveRecord::RecordNotFound
+    redirect_to admin_intentions_path, flash: { warning: 'Intention does not exist' }
+  rescue ActiveRecord::RecordInvalid
+    redirect_to admin_intentions_path, flash: { warning: 'Intention is invalid' }
+  end
+
   private
 
   def intention_params
