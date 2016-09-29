@@ -21,6 +21,9 @@
               - if intention.published?
                 .pull-right
                   %i.fa.fa-check-circle.text-green
+              -elsif intention.rejected?
+                .pull-right
+                  %i.fa.fa-ban.text-red
             %span
               = truncate(intention.content, length: 40)
   - else

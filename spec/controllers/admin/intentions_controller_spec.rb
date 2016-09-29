@@ -81,7 +81,7 @@ RSpec.describe Admin::IntentionsController do
         expect(flash[:success]).to eq 'Intention updated'
       end
 
-      it 'should updated an intention' do
+      it 'should update an intention' do
         expect(Intention.count).to eq 1
         expect(Intention.first.content).to eq content
         expect(Intention.first.country).to eq country
@@ -117,8 +117,39 @@ RSpec.describe Admin::IntentionsController do
         expect(flash[:success]).to eq 'Intention published'
       end
 
-      it 'should updated an intention' do
+      it 'should update an intention' do
         expect(Intention.first.published?).to eq true
+      end
+    end
+
+    context 'with wrong id' do
+      let(:params) { { id: 0 } }
+
+      subject! { post :publish, params: params, 'Content-Type' => 'application/x-www-form-urlencoded' }
+
+      it 'should return 302' do
+        expect(subject.status).to eq 302
+        expect(flash[:warning]).to eq 'Intention does not exist'
+      end
+    end
+  end
+
+  describe 'POST reject' do
+    let(:intention) { create(:intention) }
+
+    context 'with correct params' do
+      let(:params) { { id: intention.id } }
+
+      subject! { post :reject, params: params, 'Content-Type' => 'application/x-www-form-urlencoded' }
+
+      it 'should return 302' do
+        expect(subject.status).to eq 302
+        expect(subject).to redirect_to admin_intentions_path
+        expect(flash[:success]).to eq 'Intention rejected'
+      end
+
+      it 'should update an intention' do
+        expect(Intention.first.rejected?).to eq true
       end
     end
 

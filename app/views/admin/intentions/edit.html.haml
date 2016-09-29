@@ -1,7 +1,8 @@
 %section.content-header
   .pull-right.buttons
     - if intention.published?
-
+      = link_to reject_admin_intention_path, class: 'btn btn-default btn-sm', data: { confirm: 'Are you sure?' }, method: :post do
+        Reject
     - else
       = link_to publish_admin_intention_path, class: 'btn btn-default btn-sm', data: { confirm: 'Are you sure?' }, method: :post do
         Publish

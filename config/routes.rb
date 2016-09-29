@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     root 'welcome#index'
     resources :intentions, only: [:index, :new, :create, :edit, :update] do
       member { post :publish }
+      member { post :reject }
     end
   end
 
