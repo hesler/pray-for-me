@@ -2,6 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Intention::Update, type: :model do
   describe 'validations' do
+    subject { Intention::Update.new(create(:intention), {}) }
+
     it { should validate_presence_of(:content) }
     it { should validate_presence_of(:country) }
     it { should validate_numericality_of(:lat).is_greater_than(-90) }
@@ -14,7 +16,9 @@ RSpec.describe Intention::Update, type: :model do
     let(:intention) { create(:intention) }
 
     context 'when invalid params' do
-      let(:params) { { country: 'USA', content: '', lat: '12.1231', lng: '23.24423' } }
+      let(:country) { 'USA' }
+      let(:content) { '' }
+      let(:params) { { country: country, content: content } }
       subject(:intention_command) { Intention::Update.new(intention, params) }
 
       it 'raises active model error' do
@@ -23,7 +27,9 @@ RSpec.describe Intention::Update, type: :model do
     end
 
     context 'when valid params' do
-      let(:params) { { country: 'USA', content: 'Test contntent', lat: '12.1231', lng: '23.24423' } }
+      let(:country) { 'USA' }
+      let(:content) { 'content' }
+      let(:params) { { country: country, content: content } }
       subject!(:intention_command) { Intention::Update.new(intention, params).call  }
 
       it 'is true' do
