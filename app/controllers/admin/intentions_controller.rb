@@ -11,17 +11,57 @@ class Admin::IntentionsController < AdminController
   end
 
   def create
-    intention_create = Intention::Create.new(intention_create_params)
+    intention_create = Intention::Create.new(intention_params)
     intention_create.call
     redirect_to admin_intentions_path, flash: { success: 'Intention added' }
   rescue CommonErrors::CommandValidationFailed
     flash[:error] = intention_create.errors
-    render 'admin/intentions/new', locals: { intention: intention_create.intention }
+    render 'admin/intentions/new', locals: { intention: intention_create.intention }, status: 422
+  end
+
+  def edit
+    flash.clear
+    intention = Intention.find(params[:id])
+    render 'admin/intentions/edit', locals: { intention: intention }
+  rescue ActiveRecord::RecordNotFound
+    redirect_to admin_intentions_path, flash: { warning: 'Intention does not exist' }
+  end
+
+  def update
+    intention = Intention.find(params[:id])
+    intention_update = Intention::Update.new(intention, intention_params)
+    intention_update.call
+    redirect_to admin_intentions_path, flash: { success: 'Intention updated' }
+  rescue ActiveRecord::RecordNotFound
+    redirect_to admin_intentions_path, flash: { warning: 'Intention does not exist' }
+  rescue CommonErrors::CommandValidationFailed
+    flash[:error] = intention_update.errors
+    render 'admin/intentions/edit', locals: { intention: intention_update.intention }, status: 422
+  end
+
+  def publish
+    intention = Intention.find(params[:id])
+    Intention::Publish.new(intention).call
+    redirect_to admin_intentions_path, flash: { success: 'Intention published' }
+  rescue ActiveRecord::RecordNotFound
+    redirect_to admin_intentions_path, flash: { warning: 'Intention does not exist' }
+  rescue ActiveRecord::RecordInvalid
+    redirect_to admin_intentions_path, flash: { warning: 'Intention is invalid' }
+  end
+
+  def reject
+    intention = Intention.find(params[:id])
+    Intention::Reject.new(intention).call
+    redirect_to admin_intentions_path, flash: { success: 'Intention rejected' }
+  rescue ActiveRecord::RecordNotFound
+    redirect_to admin_intentions_path, flash: { warning: 'Intention does not exist' }
+  rescue ActiveRecord::RecordInvalid
+    redirect_to admin_intentions_path, flash: { warning: 'Intention is invalid' }
   end
 
   private
 
-  def intention_create_params
+  def intention_params
     params.require(:intention).permit(:content, :country, :region, :city, :lat, :lng).to_h
   end
 end

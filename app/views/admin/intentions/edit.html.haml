@@ -1,0 +1,20 @@
+%section.content-header
+  .pull-right.buttons
+    - if intention.published?
+      = link_to reject_admin_intention_path, class: 'btn btn-default btn-sm', data: { confirm: 'Are you sure?' }, method: :post do
+        Reject
+    - else
+      = link_to publish_admin_intention_path, class: 'btn btn-default btn-sm', data: { confirm: 'Are you sure?' }, method: :post do
+        Publish
+    = link_to admin_intentions_path, class: 'btn btn-default btn-sm' do
+      Back
+  %h1
+    Edit intention
+
+%section.content
+  .col-md-6
+    .box.box-info.box-primary
+      .box-header.with-border
+        %h3.box-title Intention Form
+      = form_for intention, url: admin_intention_path(intention.id), method: :put do |f|
+        = render partial: 'form', locals: { f: f, intention: intention }

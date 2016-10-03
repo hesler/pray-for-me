@@ -11,12 +11,19 @@
     - intentions.each do |intention|
       .col-md-3.col-sm-6.col-xs-12
         .info-box
-          %span.info-box-icon.bg-yellow
-            %i.ion.ion-ios-chatbubble-outline
+          = link_to edit_admin_intention_path(intention.id) do
+            %span.info-box-icon.bg-purple
+              %i.ion.ion-ios-chatbubble-outline
           .info-box-content
             %span.info-box-text
               %b
                 = intention.country
+              - if intention.published?
+                .pull-right
+                  %i.fa.fa-check-circle.text-green
+              -elsif intention.rejected?
+                .pull-right
+                  %i.fa.fa-ban.text-red
             %span
               = truncate(intention.content, length: 40)
   - else

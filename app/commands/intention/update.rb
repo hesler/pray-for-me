@@ -1,6 +1,6 @@
 require 'active_model/validations'
 
-class Intention::Create
+class Intention::Update
   include ::Virtus.model
   include ::ActiveModel::Validations
 
@@ -17,10 +17,14 @@ class Intention::Create
   validates :lat, numericality: { greater_than: -90, less_than: 90 }, allow_blank: true
   validates :lng, numericality: { greater_than: -180, less_than: 180 },  allow_blank: true
 
+  def initialize(intention, params)
+    super(params)
+    @intention = intention
+  end
+
   def call
-    @intention = Intention.new(attributes.merge(status: Intention.statuses[:pending]))
     validate!
-    @intention.save!
+    @intention.update!(attributes)
   rescue ActiveModel::ValidationError
     raise CommonErrors::CommandValidationFailed
   rescue ActiveRecord::RecordInvalid => e
