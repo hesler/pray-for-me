@@ -1,0 +1,25 @@
+.login-box
+  .login-logo
+    %b Admin
+    PrayForMe
+  .login-box-body
+    %p.login-box-msg Sign in to Admin Panel
+    =form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+      - if flash[:danger] || flash[:alert]
+        .callout.callout-danger
+          = flash[:danger] || flash[:alert]
+      .form-group.has-feedback{ class: "#{ 'has-error' if in_flash_error(:country) }" }
+        =f.text_field :email, autofocus: true, class: 'form-control', placeholder: 'Email'
+        %span.glyphicon.glyphicon-envelope.form-control-feedback
+      .form-group.has-feedback{ class: "#{ 'has-error' if in_flash_error(:content) }" }
+        =f.password_field :password, class: 'form-control', autocomplete: 'off', placeholder: 'Password'
+        %span.glyphicon.glyphicon-lock.form-control-feedback
+      .row
+        - if devise_mapping.rememberable?
+          .col-xs-8
+            .checkbox.icheck
+              .form-group
+                = f.check_box :remember_me
+                = f.label :remember_me, class: 'control-label'
+        .col-xs-4
+          =f.submit 'Sign in', class: 'btn btn-primary btn-block btn-flat'

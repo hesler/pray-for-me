@@ -1,3 +1,13 @@
 %aside.main-sidebar
   %section.sidebar
+    -if current_admin
+      .user-panel
+        .pull-left.image
+          =image_tag 'avatar.png', class: 'img-circle', alt: 'Admin image'
+        .pull-left.info
+          %p= current_admin.email
+          =link_to '#' do
+            %i.fa.fa-circle.text-success
+            Online
+
     = render partial: '/admin/partials/side_menu'

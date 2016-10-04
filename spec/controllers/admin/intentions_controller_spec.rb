@@ -1,10 +1,24 @@
 require 'rails_helper'
 
 RSpec.describe Admin::IntentionsController do
+  let(:admin) { create(:admin) }
+
   describe 'GET index' do
+    context 'when not logged in' do
+      subject! { get :index }
+
+      it 'should redirect to login page' do
+        expect(subject).to redirect_to(new_admin_session_path)
+      end
+    end
+
     context 'with two intentions' do
       let!(:intention) { FactoryGirl.create(:intention) }
       let!(:intention2) { FactoryGirl.create(:intention) }
+
+      before do
+        sign_in(admin)
+      end
 
       subject! { get :index }
 
@@ -15,11 +29,23 @@ RSpec.describe Admin::IntentionsController do
   end
 
   describe 'POST create' do
+    context 'when not logged in' do
+      subject! { post :create }
+
+      it 'should redirect to login page' do
+        expect(subject).to redirect_to(new_admin_session_path)
+      end
+    end
+
     context 'with correct params' do
       let(:content) { 'I need prayer' }
       let(:country) { 'England' }
       let(:city) { 'London' }
       let(:params) { { intention: { content: content, country: country, city: city, lat: 51.531133, lng: -0.226091 } } }
+
+      before do
+        sign_in(admin)
+      end
 
       subject! { post :create, params: params, 'Content-Type' => 'application/x-www-form-urlencoded' }
 
@@ -42,6 +68,10 @@ RSpec.describe Admin::IntentionsController do
       let(:city) { 'London' }
       let(:params) { { intention: { content: content, country: '', city: city, lat: 51.531133, lng: -0.226091 } } }
 
+      before do
+        sign_in(admin)
+      end
+
       subject! { post :create, params: params, 'Content-Type' => 'application/x-www-form-urlencoded' }
 
       it 'should return 422' do
@@ -59,8 +89,20 @@ RSpec.describe Admin::IntentionsController do
     let(:content) { 'I need prayer' }
     let(:country) { 'England' }
 
+    context 'when not logged in' do
+      subject! { put :update, params: { id: intention.id } }
+
+      it 'should redirect to login page' do
+        expect(subject).to redirect_to(new_admin_session_path)
+      end
+    end
+
     context 'with wrong id' do
       let(:params) { { id: 0, intention: { content: content, country: country } } }
+
+      before do
+        sign_in(admin)
+      end
 
       subject! { put :update, params: params, 'Content-Type' => 'application/x-www-form-urlencoded' }
 
@@ -72,6 +114,10 @@ RSpec.describe Admin::IntentionsController do
 
     context 'with correct params' do
       let(:params) { { id: intention.id, intention: { content: content, country: country } } }
+
+      before do
+        sign_in(admin)
+      end
 
       subject! { put :update, params: params, 'Content-Type' => 'application/x-www-form-urlencoded' }
 
@@ -91,6 +137,10 @@ RSpec.describe Admin::IntentionsController do
     context 'with errors' do
       let(:params) { { id: intention.id, intention: { content: content, country: '' } } }
 
+      before do
+        sign_in(admin)
+      end
+
       subject! { put :update, params: params, 'Content-Type' => 'application/x-www-form-urlencoded' }
 
       it 'should return 422' do
@@ -106,8 +156,20 @@ RSpec.describe Admin::IntentionsController do
   describe 'POST publish' do
     let(:intention) { create(:intention) }
 
+    context 'when not logged in' do
+      subject! { post :publish, params: { id: intention.id } }
+
+      it 'should redirect to login page' do
+        expect(subject).to redirect_to(new_admin_session_path)
+      end
+    end
+
     context 'with correct params' do
       let(:params) { { id: intention.id } }
+
+      before do
+        sign_in(admin)
+      end
 
       subject! { post :publish, params: params, 'Content-Type' => 'application/x-www-form-urlencoded' }
 
@@ -125,6 +187,10 @@ RSpec.describe Admin::IntentionsController do
     context 'with wrong id' do
       let(:params) { { id: 0 } }
 
+      before do
+        sign_in(admin)
+      end
+
       subject! { post :publish, params: params, 'Content-Type' => 'application/x-www-form-urlencoded' }
 
       it 'should return 302' do
@@ -137,8 +203,20 @@ RSpec.describe Admin::IntentionsController do
   describe 'POST reject' do
     let(:intention) { create(:intention) }
 
+    context 'when not logged in' do
+      subject! { post :reject, params: { id: intention.id } }
+
+      it 'should redirect to login page' do
+        expect(subject).to redirect_to(new_admin_session_path)
+      end
+    end
+
     context 'with correct params' do
       let(:params) { { id: intention.id } }
+
+      before do
+        sign_in(admin)
+      end
 
       subject! { post :reject, params: params, 'Content-Type' => 'application/x-www-form-urlencoded' }
 
@@ -155,6 +233,10 @@ RSpec.describe Admin::IntentionsController do
 
     context 'with wrong id' do
       let(:params) { { id: 0 } }
+
+      before do
+        sign_in(admin)
+      end
 
       subject! { post :publish, params: params, 'Content-Type' => 'application/x-www-form-urlencoded' }
 
