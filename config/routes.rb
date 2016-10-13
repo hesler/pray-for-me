@@ -12,6 +12,8 @@ Rails.application.routes.draw do
       member { post :publish }
       member { post :reject }
     end
+
+    resources :admins, only: [:index]
   end
 
   # You can have the root of your site routed with "root"

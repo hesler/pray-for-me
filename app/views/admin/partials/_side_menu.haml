@@ -1,17 +1,4 @@
 %ul.sidebar-menu
   %li.header MAIN PANEL
-  %li{ class: "treeview #{ 'active' if in_controller('intentions') }" }
-    =link_to '#' do
-      %i.fa.fa-th
-      %span Intentions
-      %span.pull-right-container
-        %i.fa.fa-angle-left.pull-right
-    %ul.treeview-menu
-      %li{ class: "#{ 'active' if in_action('intentions', 'index') }" }
-        =link_to admin_intentions_path do
-          %i.fa.fa-circle-o
-          Intention list
-      %li{ class: "#{ 'active' if in_action('intentions', 'new') }" }
-        =link_to new_admin_intention_path do
-          %i.fa.fa-circle-o
-          Add new intention
+  = render partial: 'admin/partials/side_menu/intentions'
+  = render partial: 'admin/partials/side_menu/admins'

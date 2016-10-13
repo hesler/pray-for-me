@@ -1,0 +1,35 @@
+%section.content-header
+  .pull-right.buttons
+    = link_to '#', :class => 'btn btn-default btn-sm' do
+      +
+  %h1
+    Admin
+    %small index
+
+%section.content
+  - if admins.any?
+    .col-md-12
+      .box
+        .box-body.no-padding
+          %table.table
+            %thead
+              %tr
+                %th #
+                %th Email
+                %th Joined at
+                %th Actions
+            %tbody
+              - admins.each do |admin|
+                %tr
+                  %td= admin.id
+                  %td= admin.email
+                  %td= admin.created_at.to_formatted_s(:short)
+                  %td
+                    = link_to '#' do
+                      %i.fa.fa-trash.text-red
+  - else
+    .box.box-solid.box-info
+      .box-header
+        %h3.box-title Empty admin list
+      .box-body
+        There is no admin yet.
