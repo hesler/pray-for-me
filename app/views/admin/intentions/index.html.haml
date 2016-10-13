@@ -9,7 +9,7 @@
 %section.content
   - if intentions.any?
     - intentions.each do |intention|
-      .col-md-3.col-sm-6.col-xs-12
+      .col-md-6.col-sm-8.col-xs-12
         .info-box
           = link_to edit_admin_intention_path(intention.id) do
             %span.info-box-icon.bg-purple
@@ -24,6 +24,9 @@
               -elsif intention.rejected?
                 .pull-right
                   %i.fa.fa-ban.text-red
+              -else
+                .pull-right
+                  %i.fa.fa-question-circle.text-yellow
             %span
               = truncate(intention.content, length: 40)
   - else
