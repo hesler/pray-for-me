@@ -1,0 +1,19 @@
+.box-body
+  - if flash[:error]
+    .callout.callout-danger
+      %h4 Errors
+      %ul
+        - flash[:error].full_messages.each do |msg|
+          %li #{msg}
+  .form-group{ class: "#{ 'has-error' if in_flash_error(:email) }" }
+    =f.label :email
+    =f.text_field :email, class: 'form-control', placeholder: 'Enter email...'
+  .form-group{ class: "#{ 'has-error' if in_flash_error(:password) }" }
+    =f.label :password
+    =f.text_field :password, class: 'form-control', placeholder: 'Enter password...'
+  .form-group{ class: "#{ 'has-error' if in_flash_error(:password_confirmation) }" }
+    =f.label :password_confirmation
+    =f.text_field :password_confirmation, class: 'form-control', placeholder: 'Enter password confirmation...'
+.box-footer
+  .pull-right
+    =f.submit 'Submit', class: 'btn btn-primary bg-purple'

@@ -9,3 +9,7 @@
       =link_to admin_admins_path do
         %i.fa.fa-circle-o
         %small Admin list
+    %li{ class: "#{ 'active' if in_action('admins', 'new') }" }
+      =link_to new_admin_admin_path do
+        %i.fa.fa-circle-o
+        %small Add new admin

@@ -13,7 +13,7 @@ Rails.application.routes.draw do
       member { post :reject }
     end
 
-    resources :admins, only: [:index]
+    resources :admins, only: [:index, :new, :create]
   end
 
   # You can have the root of your site routed with "root"
