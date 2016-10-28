@@ -1,0 +1,11 @@
+%li{ class: "treeview #{ 'active' if in_controller('admins') }" }
+  =link_to '#' do
+    %i.fa.fa-users
+    %span Admins
+    %span.pull-right-container
+      %i.fa.fa-angle-left.pull-right
+  %ul.treeview-menu
+    %li{ class: "#{ 'active' if in_action('admins', 'index') }" }
+      =link_to admin_admins_path do
+        %i.fa.fa-circle-o
+        %small Admin list

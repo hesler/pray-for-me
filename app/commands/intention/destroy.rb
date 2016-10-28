@@ -1,4 +1,4 @@
-class Intention::Reject
+class Intention::Destroy
   include ::Virtus.model
 
   attr_reader :intention
@@ -8,6 +8,7 @@ class Intention::Reject
   end
 
   def call
-    @intention.update!(status: Intention.statuses[:rejected])
+    @intention.destroy!
+    true
   end
 end

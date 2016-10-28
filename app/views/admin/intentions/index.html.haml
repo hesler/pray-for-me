@@ -18,15 +18,16 @@
             %span.info-box-text
               %b
                 = intention.country
-              - if intention.published?
-                .pull-right
+              .pull-right
+                - if intention.published?
                   %i.fa.fa-check-circle.text-green
-              -elsif intention.rejected?
-                .pull-right
+                -elsif intention.rejected?
                   %i.fa.fa-ban.text-red
-              -else
-                .pull-right
+                -else
                   %i.fa.fa-question-circle.text-yellow
+                = link_to admin_intention_path(intention.id), method: :delete do |d|
+                  %i.fa.fa-trash.text-red
+
             %span
               = truncate(intention.content, length: 40)
   - else
