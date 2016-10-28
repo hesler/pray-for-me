@@ -246,4 +246,51 @@ RSpec.describe Admin::IntentionsController do
       end
     end
   end
+
+  describe 'DELETE destroy' do
+    let(:intention) { create(:intention) }
+
+    context 'when not logged in' do
+      subject! { delete :destroy, params: { id: intention.id } }
+
+      it 'should redirect to login page' do
+        expect(subject).to redirect_to(new_admin_session_path)
+      end
+    end
+
+    context 'with correct params' do
+      let(:params) { { id: intention.id } }
+
+      before do
+        sign_in(admin)
+      end
+
+      subject! { delete :destroy, params: params, 'Content-Type' => 'application/x-www-form-urlencoded' }
+
+      it 'should return 302' do
+        expect(subject.status).to eq 302
+        expect(subject).to redirect_to admin_intentions_path
+        expect(flash[:success]).to eq 'Intention deleted'
+      end
+
+      it 'should destroy an intention' do
+        expect(Intention.count).to eq 0
+      end
+    end
+
+    context 'with wrong id' do
+      let(:params) { { id: 0 } }
+
+      before do
+        sign_in(admin)
+      end
+
+      subject! { delete :destroy, params: params, 'Content-Type' => 'application/x-www-form-urlencoded' }
+
+      it 'should return 302' do
+        expect(subject.status).to eq 302
+        expect(flash[:warning]).to eq 'Intention does not exist'
+      end
+    end
+  end
 end

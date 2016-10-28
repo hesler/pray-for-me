@@ -1,8 +1,5 @@
-require 'active_model/validations'
-
 class Intention::Publish
   include ::Virtus.model
-  include ::ActiveModel::Validations
 
   attr_reader :intention
 

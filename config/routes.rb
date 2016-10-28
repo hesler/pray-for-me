@@ -8,7 +8,7 @@ Rails.application.routes.draw do
 
   namespace :admin do
     root 'welcome#index'
-    resources :intentions, only: [:index, :new, :create, :edit, :update] do
+    resources :intentions, only: [:index, :new, :create, :edit, :update, :destroy] do
       member { post :publish }
       member { post :reject }
     end

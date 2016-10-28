@@ -45,8 +45,6 @@ class Admin::IntentionsController < AdminController
     redirect_to admin_intentions_path, flash: { success: 'Intention published' }
   rescue ActiveRecord::RecordNotFound
     redirect_to admin_intentions_path, flash: { warning: 'Intention does not exist' }
-  rescue ActiveRecord::RecordInvalid
-    redirect_to admin_intentions_path, flash: { warning: 'Intention is invalid' }
   end
 
   def reject
@@ -55,8 +53,14 @@ class Admin::IntentionsController < AdminController
     redirect_to admin_intentions_path, flash: { success: 'Intention rejected' }
   rescue ActiveRecord::RecordNotFound
     redirect_to admin_intentions_path, flash: { warning: 'Intention does not exist' }
-  rescue ActiveRecord::RecordInvalid
-    redirect_to admin_intentions_path, flash: { warning: 'Intention is invalid' }
+  end
+
+  def destroy
+    intention = Intention.find(params[:id])
+    Intention::Destroy.new(intention).call
+    redirect_to admin_intentions_path, flash: { success: 'Intention deleted' }
+  rescue ActiveRecord::RecordNotFound
+    redirect_to admin_intentions_path, flash: { warning: 'Intention does not exist' }
   end
 
   private
