@@ -1,6 +1,6 @@
 %section.content-header
   .pull-right.buttons
-    = link_to '#', :class => 'btn btn-default btn-sm' do
+    = link_to new_admin_admin_path, :class => 'btn btn-default btn-sm' do
       +
   %h1
     Admin
@@ -25,7 +25,7 @@
                   %td= admin.email
                   %td= admin.created_at.to_formatted_s(:short)
                   %td
-                    = link_to '#' do
+                    = link_to admin_admin_path(admin.id), method: :delete do |d|
                       %i.fa.fa-trash.text-red
   - else
     .box.box-solid.box-info
