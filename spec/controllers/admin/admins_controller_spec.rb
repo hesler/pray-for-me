@@ -61,6 +61,40 @@ RSpec.describe Admin::AdminsController do
     end
   end
 
+  describe 'POST invite' do
+    context 'when not logged in' do
+      subject! { post :invite }
+
+      it 'should redirect to login page' do
+        expect(subject).to redirect_to(new_admin_session_path)
+      end
+    end
+
+    context 'with correct params' do
+      let(:email) { 'test@test.pl' }
+      let(:params) { { admin: { email: email } } }
+
+      before do
+        sign_in(admin)
+      end
+
+      subject! { post :invite, params: params, 'Content-Type' => 'application/x-www-form-urlencoded' }
+
+      it 'should return 302' do
+        expect(subject.status).to eq 302
+        expect(subject).to redirect_to admin_admins_path
+        expect(flash[:success]).to eq 'Admin invited'
+      end
+
+      it 'should create an admin' do
+        expect(Admin.count).to eq 2
+        expect(Admin.last.email).to eq email
+        expect(Admin.last.invitation_token).not_to be_nil
+        expect(Admin.last.confirmed_at).to be_nil
+      end
+    end
+  end
+
   describe 'DELETE destroy' do
     let(:admin_created) { create(:admin) }
 

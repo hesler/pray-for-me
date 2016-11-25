@@ -14,7 +14,7 @@ RSpec.describe Admin::Create, type: :model do
       subject(:admin_command) { Admin::Create.new(params) }
 
       it 'raises active model error' do
-        expect { admin_command.call }.to raise_error(CommonErrors::CommandValidationFailed)
+        expect { subject.call }.to raise_error(CommonErrors::CommandValidationFailed)
       end
     end
 
@@ -25,7 +25,7 @@ RSpec.describe Admin::Create, type: :model do
       subject(:admin_command) { Admin::Create.new(params) }
 
       it 'raises active model error' do
-        expect { admin_command.call }.to raise_error(CommonErrors::AdminAlreadyExists)
+        expect { subject.call }.to raise_error(CommonErrors::AdminAlreadyExists)
       end
     end
 
@@ -35,7 +35,7 @@ RSpec.describe Admin::Create, type: :model do
       subject(:admin_command) { Admin::Create.new(params) }
 
       it 'raises active model error' do
-        expect { admin_command.call }.to raise_error(CommonErrors::CommandValidationFailed)
+        expect { subject.call }.to raise_error(CommonErrors::CommandValidationFailed)
       end
     end
 
@@ -47,12 +47,13 @@ RSpec.describe Admin::Create, type: :model do
       subject!(:admin_command) { Admin::Create.new(params).call }
 
       it 'is true' do
-        expect(admin_command).to eq true
+        expect(subject).to eq true
       end
 
-      it 'created an admin' do
+      it 'creates an admin' do
         expect(Admin.first).not_to be_nil
         expect(Admin.first.email).to eq email
+        expect(Admin.first.confirmed_at).not_to be_nil
       end
     end
   end

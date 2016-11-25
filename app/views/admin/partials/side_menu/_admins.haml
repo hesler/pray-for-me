@@ -13,3 +13,7 @@
       =link_to new_admin_admin_path do
         %i.fa.fa-circle-o
         %small Add new admin
+    %li{ class: "#{ 'active' if in_action('admins', 'new_invitation') }" }
+      =link_to new_invitation_admin_admins_path do
+        %i.fa.fa-circle-o
+        %small Invite admin
