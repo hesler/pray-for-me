@@ -13,7 +13,12 @@ Rails.application.routes.draw do
       member { post :reject }
     end
 
-    resources :admins, only: [:index, :new, :create, :destroy]
+    resources :admins, only: [:index, :new, :create, :destroy] do
+      collection { get :new_invitation }
+      collection { post :invite }
+    end
+
+    get 'confirm/:token', to: 'admin#confirm', as: 'confirm'
   end
 
   # You can have the root of your site routed with "root"

@@ -1,0 +1,14 @@
+%section.content-header
+  .pull-right.buttons
+    = link_to admin_admins_path, class: 'btn btn-default btn-sm' do
+      Back
+  %h1
+    Invite admin
+
+%section.content
+  .col-md-6
+    .box.box-info.box-primary
+      .box-header.with-border
+        %h3.box-title Admin Form
+      =form_for admin, url: invite_admin_admins_path, method: :post do |f|
+        = render partial: 'invitation_form', locals: { f: f, admin: admin }

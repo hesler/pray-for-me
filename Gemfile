@@ -1,24 +1,25 @@
 source 'https://rubygems.org'
 
 # Main
-gem 'rails',                  '5.0'
+gem 'rails',                  '~> 5.0'
 gem 'pg',                     '~> 0.15'
 gem 'virtus',                 '~> 1.0.5'
 
 # Auth
-gem 'devise',                 '~> 4.2.0'
+gem 'devise'
 
 # Views and templates
-gem 'haml-rails',             '~> 0.9.0'
+gem 'haml-rails',             '~> 1.0'
 gem 'font-awesome-rails',     '~> 4.6.1'
 gem 'ionicons-rails',         '~> 2.0.0'
 gem 'jquery-rails',           '~> 4.1.1'
-gem 'bootstrap-sass',         '~> 3.3.6'
+gem 'bootstrap-sass',         '~> 3.4.1'
 gem 'sass-rails',             '~> 5.0'
 gem 'uglifier',               '>= 1.3.0'
-gem 'coffee-rails',           '~> 4.1.0'
+gem 'coffee-rails',           '~> 4.2.2'
 
 group :development, :test do
+  gem 'bundler-audit',        '~> 0.6.1'
   gem 'byebug',               '~> 9.0.5'
 end
 

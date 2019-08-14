@@ -1,0 +1,13 @@
+.box-body
+  - if flash[:error]
+    .callout.callout-danger
+      %h4 Errors
+      %ul
+        - flash[:error].full_messages.each do |msg|
+          %li #{msg}
+  .form-group{ class: "#{ 'has-error' if in_flash_error(:email) }" }
+    =f.label :email
+    =f.text_field :email, class: 'form-control', placeholder: 'Enter email...'
+.box-footer
+  .pull-right
+    =f.submit 'Submit', class: 'btn btn-primary bg-purple'

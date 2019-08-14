@@ -19,6 +19,21 @@ class Admin::AdminsController < AdminController
     render 'admin/admins/new', locals: { admin: admin_create.admin }, status: 422
   end
 
+  def new_invitation
+    flash.clear
+    admin = Admin.new
+    render 'admin/admins/new_invitation', locals: { admin: admin }
+  end
+
+  def invite
+    admin_invite = Admin::Invite.new(invitation_params)
+    admin_invite.call
+    redirect_to admin_admins_path, flash: { success: 'Admin invited' }
+  rescue CommonErrors::CommandValidationFailed
+    flash[:error] = admin_create.errors
+    render 'admin/admins/new_invitation', locals: { admin: admin_invite.admin }, status: 422
+  end
+
   def destroy
     admin = Admin.find(params[:id])
     Admin::Destroy.new(admin).call
@@ -31,5 +46,9 @@ class Admin::AdminsController < AdminController
 
   def admin_params
     params.require(:admin).permit(:email, :password, :password_confirmation, :first_name, :last_name).to_h
+  end
+
+  def invitation_params
+    params.require(:admin).permit(:email).to_h
   end
 end

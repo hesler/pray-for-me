@@ -11,19 +11,23 @@
     .col-md-12
       .box
         .box-body.no-padding
-          %table.table
+          %table.table.admin-table
             %thead
               %tr
                 %th #
                 %th Email
                 %th Joined at
+                %th Confirmed
                 %th Actions
             %tbody
               - admins.each do |admin|
-                %tr
+                %tr{ class: "#{ 'unconfirmed' if admin.confirmed_at.nil? }" }
                   %td= admin.id
                   %td= admin.email
                   %td= admin.created_at.to_formatted_s(:short)
+                  %td
+                    - unless admin.confirmed_at.nil?
+                      %i.fa.fa-check-circle.text-green
                   %td
                     = link_to admin_admin_path(admin.id), method: :delete do |d|
                       %i.fa.fa-trash.text-red
