@@ -26,7 +26,7 @@ end
 group :development do
   gem 'web-console',          '~> 3.3.1'
   gem 'listen',               '~> 3.0.5'
-  gem 'better_errors',        '~> 2.1.1'
+  gem 'better_errors',        '~> 2.8.0'
 end
 
 group :test do
